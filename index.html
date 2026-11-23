@@ -173,6 +173,7 @@ details.adv{margin-top:14px}details.adv summary{font-size:17px;color:var(--ink2)
 .brand p #lookname{display:none}body.idle .tchip,body:has(#banner.show:not(.compact)) .tchip{opacity:0;pointer-events:none}
 .lookline{font-size:clamp(20px,1.7vw,24px);color:var(--ink2);margin:-6px 0 20px;letter-spacing:.03em}.lookline b{color:var(--ink);font-weight:400}
 #fact .l{font-size:clamp(19px,1.35vw,21px);line-height:1.45;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);color:var(--ink)}#fact .l:empty{display:none}
+#fact .r b{color:var(--ok,#6fcf97)}
 #fact .l b{color:var(--mid);font-weight:400;letter-spacing:.16em;font-size:.78em;margin-right:8px}
 #fact .c{font-size:clamp(18px,1.3vw,20px);margin-top:12px;color:var(--accent);font-weight:400;letter-spacing:.02em;display:none}
 #fact.hold .c{display:block}
@@ -187,6 +188,7 @@ details.adv{margin-top:14px}details.adv summary{font-size:17px;color:var(--ink2)
   #chart{max-height:96px}.tiles{gap:6px;margin-top:8px;padding-top:8px}.tile .k{font-size:13px;letter-spacing:.12em}.tile .v{font-size:23px}.lv-q{font-size:20px!important}.timebar{margin-top:10px}
   #acts{gap:8px;bottom:14px}.act{padding:10px 10px;border-radius:14px;display:block}.act .n{display:none}.act .t{font-size:20px;white-space:normal;line-height:1.2}.act .g{font-size:14px}
   #prompt{bottom:138px;font-size:22px}#fruitTag{font-size:18px;padding:6px 12px 6px 10px}#fruitTag small{font-size:11px}.tchip{position:static;font-size:14px;padding:5px 12px 5px 10px}.brand h1{letter-spacing:.05em}header{gap:8px 10px}.spacer{display:none}.stat .lbl{letter-spacing:.12em}.pbtn{font-size:14px;padding:6px 10px}.brand h1 i{margin-right:8px}body.idle .tchip{display:none}#banner.compact{top:calc(var(--hdr,104px) + 8px)}.ov{padding:calc(var(--hdr,104px) + 6px) 12px 12px}.tag{display:none}.box h1{font-size:50px;margin-top:0;line-height:1}.box p{font-size:20px;margin-top:8px;line-height:1.4}.setup{margin-top:10px;padding:9px 18px;font-size:17px}.how{margin:14px 0 12px;display:grid;grid-template-columns:repeat(3,1fr)}.how span{padding:8px 6px;font-size:0}.how span+span{border-left:1px solid var(--line)}.how span i{font-size:12px;margin-bottom:2px}.how span b{font-size:15px}.lookline{font-size:17px;margin:0 0 10px}.cta{font-size:21px;padding:12px 26px}.hint{font-size:15px;margin-top:8px;line-height:1.35}.links{margin-top:8px}.chip{font-size:14px;padding:6px 12px}#fact{padding:12px 14px 10px}#fact .s{display:none}.box{padding:24px 18px}.how span{min-width:0}.how span b{font-size:21px}.take{grid-template-columns:1fr}
+  #fact{max-height:calc(100vh - var(--hdr,104px) - 20px);overflow-y:auto}#fact .t{font-size:17px!important;line-height:1.45}#fact .l{font-size:15px!important;line-height:1.45}#fact .h{font-size:13px}
   #shotTitle{left:16px;bottom:auto;top:15vh}body.cine #lbT,body.cine #lbB{height:0}#banner{padding:14px 18px}#hint{display:none}}
 </style>
 </head>
@@ -194,7 +196,7 @@ details.adv{margin-top:14px}details.adv summary{font-size:17px;color:var(--ink2)
 <div id="stage"></div>
 <div id="vision"></div>
 <div id="lbT"></div><div id="lbB"></div><div id="flash"></div>
-<div id="fact" class="glass"><div class="h" id="factH"></div><div class="t" id="factT"></div><div class="l" id="factL"></div><div class="s" id="factS"></div><div class="c" id="factC">Shake, press Space or tap to continue<i><u id="factBar"></u></i></div></div>
+<div id="fact" class="glass"><div class="h" id="factH"></div><div class="t" id="factT"></div><div class="l" id="factL"></div><div class="l r" id="factR"></div><div class="s" id="factS"></div><div class="c" id="factC">Shake, press Space or tap to continue<i><u id="factBar"></u></i></div></div>
 <div id="fruitTag" class="glass"><small>On the scan pad</small><span id="fruitTagN"></span></div>
 <div id="shotTitle"><div class="n" id="stN"></div><div class="f" id="stF"></div><div class="o" id="stO"></div></div>
 
@@ -6759,19 +6761,19 @@ const TUTORIAL_ROUNDS = 3;   // first crates are tutorials (trend shown)
 const FRUITS = {
   banana:{ name:"Bananas", temp:["13°C","18°C","9°C ❄"],
     fact:"Bananas sail green at 13–14 °C. Just a few degrees colder and the peel gets chilling injury within hours; one pallet giving off ethylene can trigger ripening in the whole container.",
-    src:"UC Davis Postharvest Center · Global Cold Chain Alliance" },
+    src:"UC Davis Postharvest Center · Global Cold Chain Alliance · EPD Hong Kong (O·PARK1)", second:"spotty bananas can be sold to bakeries for banana bread and smoothies" },
   grapes:{ name:"Table Grapes", temp:["0°C","6°C","12°C"],
     fact:"Grey mould (Botrytis) is the most destructive post-harvest disease of table grapes. It keeps growing even near 0 °C and spreads from berry to berry, while water loss turns the stems brown.",
-    src:"UC Davis Postharvest Center" },
+    src:"UC Davis Postharvest Center · EPD Hong Kong (O·PARK1)", second:"trim off mouldy berries; the sound ones can still go to juice" },
   strawberry:{ name:"Strawberries", temp:["0°C","8°C","15°C"],
     fact:"Strawberries must be picked almost fully ripe and can't ripen further. At 10 °C they last only about a third as long as at 0 °C, and grey mould is the biggest cause of losses.",
-    src:"UC Davis Postharvest Center · Ontario OMAFRA" },
+    src:"UC Davis Postharvest Center · Ontario OMAFRA · EPD Hong Kong (O·PARK1)", second:"bruised but sound berries can become jam or smoothies" },
   mango:{ name:"Mangoes", temp:["13°C","20°C","7°C ❄"],
     fact:"Mature-green mangoes get chilling injury below 10 °C: the peel pits and turns grey, and the fruit never ripens properly. Anthracnose can hide inside and appear as black spots later.",
-    src:"Global Cold Chain Alliance (WFLO) · UC Davis" },
+    src:"Global Cold Chain Alliance (WFLO) · UC Davis · EPD Hong Kong (O·PARK1)", second:"soft mangoes can become purée, juice or dried mango" },
   avocado:{ name:"Avocados", temp:["5°C","12°C","1°C ❄"],
     fact:"Avocados only start ripening after harvest, then their ethylene output soars. Held at 0–2 °C for over a week, mature-green fruit get pitted, blackened skin, and ethylene makes chilling damage worse.",
-    src:"UC Davis Postharvest Center · Global Cold Chain Alliance" }
+    src:"UC Davis Postharvest Center · Global Cold Chain Alliance · EPD Hong Kong (O·PARK1)", second:"very ripe avocados can become guacamole or purée" }
 };
 const INFO = {
   stable:{ answer:"GO", lesson:"Low and steady = healthy fruit. No extra handling needed.", trend:["Steady","ok"],
@@ -7136,20 +7138,28 @@ let factAnchor=null;
 const _fv=new THREE.Vector3();
 function showFact(r,c){
   const F=FRUITS[r.fruit]; $("factH").textContent="WHY "+F.name.toUpperCase()+" SPOIL IN SHIPPING";
-  $("factT").textContent=F.fact; $("factS").textContent="Source  "+F.src; $("factL").innerHTML="<b>LESSON</b>"+INFO[r.type].lesson;
-  factAnchor=c.position.clone().add(V(0,0.9,0)); $("fact").classList.add("show"); $("fruitTag").classList.remove("show"); placeFact();
+  $("factT").textContent=F.fact; $("factS").textContent="Source  "+F.src; $("factL").innerHTML="<b>LESSON</b>"+INFO[r.type].lesson; $("factR").innerHTML="<b>SECOND LIFE</b>Still sound: "+F.second+". Mouldy: never eat it. In Hong Kong, O·PARK1 turns food waste into biogas electricity and compost, and insect larvae can turn fruit waste into animal feed.";
+  factAnchor=c.position.clone().add(V(0,0.9,0)); factSideLock=0; factFrozen=false; $("fact").classList.add("show"); $("fruitTag").classList.remove("show"); placeFact();
 }
 function hideFact(){ factAnchor=null; $("fact").classList.remove("show"); }
+// The side is chosen once when the card appears (no left/right flipping while the camera drifts),
+// and the card is frozen in place while it is held for reading.
+let factSideLock=0, factFrozen=false;
 function placeFact(){
   if(!factAnchor) return; const el=$("fact");
+  if(factFrozen) return;
   _fv.copy(factAnchor).project(camera);
   const x=(_fv.x*.5+.5)*innerWidth, y=(-_fv.y*.5+.5)*innerHeight, w=el.offsetWidth, h=el.offsetHeight;
-  const bb=$("banner").classList.contains("show")? $("banner").getBoundingClientRect().bottom+14 : innerHeight*.2;
-  const side= x<innerWidth*.5 ? 1 : -1, gap=Math.min(90,innerWidth*.06);
+  let bb=$("banner").classList.contains("show")? $("banner").getBoundingClientRect().bottom+14 : innerHeight*.2;
+  // The card is frozen once placed, so always leave room for a result banner that may appear later.
+  const hb=document.querySelector("header").getBoundingClientRect().bottom; bb=Math.max(bb, hb+(innerWidth<=700?78:64));
+  if(!factSideLock) factSideLock= x<innerWidth*.5 ? 1 : -1;
+  const side=factSideLock, gap=Math.min(90,innerWidth*.06);
   let left= side>0 ? x+gap : x-gap-w; left=clamp(left,12,innerWidth-w-12);
   const top=clamp(y-h*.5,bb,Math.max(bb,innerHeight-h-130));
-  el.style.left=left+"px"; el.style.top=top+"px"; el.style.setProperty("--tail",clamp(x-left-10,18,w-36)+"px");
+  el.style.maxHeight=(innerHeight-top-12)+"px"; el.style.left=left+"px"; el.style.top=top+"px"; el.style.setProperty("--tail",clamp(x-left-10,18,w-36)+"px");
   el.classList.toggle("side",true);
+  factFrozen=true;
 }
 
 // ===================== Fruit name tag (round 4A): follows the crate while it is on screen =====================
